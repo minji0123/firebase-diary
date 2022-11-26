@@ -1,5 +1,7 @@
 /* eslint-disable*/
-import {createContext,useReducer} from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import {createContext,useEffect,useReducer} from 'react';
+import { appAuth } from '../firebase/config';
 
 /**Context
  * React 컴포넌트 트리 안에서 데이터를 전역으로(global)사용할 수 있도록 고안된 방법. 
@@ -14,17 +16,38 @@ const authReducer = (state,action) => {
             return {...state, user:action.payload}
         case 'logout':// 로그아웃 case
             return {...state, user:null}//유저정보 null 로 세팅해둬서 자동으로 날아가게
+        case 'isAuthReady':// 유저정보 setting case
+            return {...state, user:action.payload, isAuthReady:true}
         default:
             return state
     }
 }
 
+
+
 // 이만큼을 context 로 관리할거임
 const AuthContextProvider = ({children}) =>{
     
     // 유저 정보를 관리할 reduser 훅
-    const [state,dispatch]  = useReducer(authReducer, { user : null })
-    console.log('userstate:', state);
+    const [state,dispatch]  = useReducer(authReducer, { 
+        user : null,    // user 정보 초기값
+        isAuthReady: false // 사용자 인증정보 초기값
+    })
+
+    /** onAuthStateChanged
+     * 유저가 로그인상태인지 아닌지를 알기 위해서는 
+     * 리액트가 화면 랜더링을 하기 전에 
+     * 재빠르게 파이어베이스랑 통신을 해야됨   */
+
+    useEffect(()=>{
+        // 유저의 변화를 관찰하는 함수
+        const unsubscribe = onAuthStateChanged(appAuth, (user)=>{
+            dispatch({type:'isAuthReady', payload: user});
+        })
+        return unsubscribe;
+
+    },[])
+    console.log('담겨있는 userstate:', state);
 
     return(
         // state 값이 늘어날 수 있기 때문에 spread operator 사용
