@@ -17,6 +17,7 @@ export const useSignup = () => {
 
     // 회원가입
     const signup = (email, password, displayName) =>{
+        console.log('인자로 받아옴??',displayName);
         setError(null); // 아직 에러가 없음...
         setIsPending(true); // 통신을 진행중입니다...
 
@@ -24,14 +25,14 @@ export const useSignup = () => {
         createUserWithEmailAndPassword(appAuth, email, password)
         .then((userCredential)=>{
             const user = userCredential.user;
-            console.log(user);
+            console.log('회원가입user: ',user);
 
             if(!user){
                 throw new Error('회원가입에 실패했습니다.');
             }
 
             // 회원가입이 완료되면 가입된 회원에 닉네임 저장시키기
-            updateProfile(appAuth,currentUser,{displayName})
+            updateProfile(appAuth.currentUser,{displayName})
             .then(()=>{
                 dispatch({type: 'login', payload:user})
                 setError(null); //에러없다고 넣어주고
@@ -39,12 +40,14 @@ export const useSignup = () => {
             }).catch((err) => {
                 setError(err.message);
                 setIsPending(false);
+                console.log(err.message);
             })
 
         })
         .catch((err) => {
             setError(err.message);
             setIsPending(false);
+            console.log(err.message);
         })
 
     }

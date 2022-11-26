@@ -29,7 +29,7 @@ export default function Signup(){
 
         event.preventDefault();
         console.log(email, password, displayName);
-        // signup(email,password,displayName);
+        signup(email,password,displayName);
     }
 
     return (
