@@ -1,9 +1,13 @@
 .nav {
-    background-color: royalblue;
+    color: #fff;
+
+    background-color: #EB5E28;
     padding: 20px 50px;
 }
 
 .nav .list_nav {
+    color: #fff;
+
     display: flex;
     justify-content: right;
     align-items: center;
@@ -23,7 +27,7 @@
     margin-left: 20px;
     padding: 6px 12px;
     border-radius: 10px;
-    background-color: teal;
+    background-color: rgb(16, 119, 56);
     border:none;
     color:#fff;
     cursor: pointer;

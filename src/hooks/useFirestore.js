@@ -2,7 +2,7 @@
 // 컬렉션을 만들고 데이터를 넘겨주는 작업을 위한 훅
 import { useReducer } from "react"
 import { appFireStore,timestamp } from "../firebase/config"
-import { addDoc, collection } from "firebase/firestore"
+import { addDoc, deleteDoc,doc, collection } from "firebase/firestore"
 
 // 우리가 받을 응답을 저장할 객체 (객체이기 때문에 리듀서로 관리)
 // 상태를 관리할 때 error나 isPending을 useReducer로 한번에 관리
@@ -22,11 +22,14 @@ const initState = {
 
 // 전달 받는 action에 따른 state 업데이트
 const storeReducer = (state, action) => {
+    /**case 마다 데이터가 다 달라서 spread operator 안쓰고 그냥 적음... */
     switch (action.type) {
         case 'isPending':
             return { isPending: true, document: null,            success: false, error: null }
         case 'addDoc':
-            return { isPending: false, document: action.payload, success: true, error: null }
+            return { isPending: false, document: action.payload, success: true,  error: null }
+        case 'deleteDoc':
+            return { isPending: false, document: action.payload, success: true,  error: null }
         case 'error':
             return { isPending: false, document: null,           success: false, error: action.payload }
         default:
@@ -58,7 +61,7 @@ export const useFirestore = (transaction) => {
             // docRef : 참조(컬랙션 이름)
             // addDoc : 컬렉션에 문서를 추가
             const docRef = await addDoc(colRef,{ ...doc, createdTime});
-            console.log('docRef',docRef);
+            console.log('저장 docRef',docRef);
             dispatch({ type: 'addDoc', payload: docRef });
         } catch (error) {
             dispatch({ type: 'error', payload: error.message });
@@ -66,8 +69,17 @@ export const useFirestore = (transaction) => {
     }
 
     // 컬렉션에서 문서를 삭제
-    const deleteDocument = (id) => {
+    const deleteDocument = async (id) => {
 
+        dispatch({ type: "isPending" });
+        try {
+
+            const docRef = await deleteDoc(doc(colRef,id));
+            console.log('삭제 docRef',docRef);
+            dispatch({ type: 'deleteDoc', payload: docRef });
+        } catch (error) {
+            dispatch({ type: 'error', payload: error.message });
+        }
     }
 
     return { addDocument, deleteDocument, response }

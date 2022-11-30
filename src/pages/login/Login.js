@@ -31,7 +31,7 @@ export default function Login(){
     return (
         <>
         <form className={styles.login_form} onSubmit={handleSubmit} >
-            <fieldset>
+            <fieldset >
                 <legend>로그인</legend>
 
                 <label htmlFor="myEmail">email : </label>
