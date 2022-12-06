@@ -1,13 +1,14 @@
 /* eslint-disable*/
 
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom";
 import { useFirestore } from "../../hooks/useFirestore";
 export default function DiaryForm({uid,displayName}) {
 
     const [title, setTitle] = useState("");
     const [text, setText] = useState("");
     const { addDocument, response } = useFirestore("diary");// 컬랙션 이름 파라미터로 넣어주기
-
+    const navigate = useNavigate(); // 리다이렉트
 
     const handleData = (event) => {
         if (event.target.id === 'tit') {
@@ -27,8 +28,8 @@ export default function DiaryForm({uid,displayName}) {
    
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('제목, 내용 ??',title, text);
         addDocument({uid, displayName, title, text});// uid:작성한 유저 id
+        navigate("/")
     }
 
     return (
@@ -42,7 +43,7 @@ export default function DiaryForm({uid,displayName}) {
                     <label htmlFor="txt">일기 내용 : </label>
                     <textarea id="txt" type='text' value={text} required onChange={handleData}></textarea>
 
-                    <button type="submit">저장하기</button>
+                    <button  type="submit">저장하기</button>
                 </fieldset>
             </form>
         </>
