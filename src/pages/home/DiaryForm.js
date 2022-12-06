@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react"
 import { useFirestore } from "../../hooks/useFirestore";
-
-export default function DiaryForm({uid}) {
+export default function DiaryForm({uid,displayName}) {
 
     const [title, setTitle] = useState("");
     const [text, setText] = useState("");
     const { addDocument, response } = useFirestore("diary");// 컬랙션 이름 파라미터로 넣어주기
+
 
     const handleData = (event) => {
         if (event.target.id === 'tit') {
@@ -28,7 +28,7 @@ export default function DiaryForm({uid}) {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log('제목, 내용 ??',title, text);
-        addDocument({uid,title, text});// uid:작성한 유저 id
+        addDocument({uid, displayName, title, text});// uid:작성한 유저 id
     }
 
     return (

@@ -8,7 +8,6 @@ import styles from './Home.module.css';
 
 export default function Home() {
 
-
     //유저정보 받아서 diaryform 에 넣어줄거임(props로...)
     const {user} = useAuthContext();
     
@@ -17,14 +16,10 @@ export default function Home() {
 
     return (
         <main className={styles.cont}>
-            <aside className={styles.side_menu}>
-                <DiaryForm uid = {user.uid} ></DiaryForm>
-            </aside>
             <ul className={styles.content_list}>
                 {error && <strong>{error}</strong>}
                 {documents && <DiaryList diaries={documents}/> }
             </ul>
-
         </main>
     )
 }

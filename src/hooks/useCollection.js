@@ -14,7 +14,8 @@ export const useCollection = (transaction, myQuery) => { // myQuery: 파이어�
     useEffect(() => {
         let q;
         if(myQuery){
-            q = query(collection(appFireStore, transaction),where(...myQuery),orderBy("createdTime","desc"));
+            // q = query(collection(appFireStore, transaction),where(...myQuery),orderBy("createdTime","desc")); -> 나중에 다시 살릴거임...
+            q = query(collection(appFireStore, transaction));
             /**
              * 쿼리문 두개 이상 사용하면 index 를 생성해줘야 함
              */

@@ -3,6 +3,7 @@
 import { useReducer } from "react"
 import { appFireStore,timestamp } from "../firebase/config"
 import { addDoc, deleteDoc,doc, collection } from "firebase/firestore"
+import  {today, GetCurDayTime, TimeString }  from "../utils/DateUtil.js"
 
 // 우리가 받을 응답을 저장할 객체 (객체이기 때문에 리듀서로 관리)
 // 상태를 관리할 때 error나 isPending을 useReducer로 한번에 관리
@@ -49,18 +50,20 @@ export const useFirestore = (transaction) => {
 		// 원하는 컬렉션의 참조를 인자로 보내주면 파이어스토어가 자동으로 해당 컬렉션을 생성해줌 
     const colRef = collection(appFireStore, transaction);
 
-    // 컬렉션에문서 를 저장
+    // 컬렉션에 문서 를 저장
     const addDocument = async (doc) => {
 
         dispatch({ type: "isPending" });
         try {
 
-            // 시간 저장
+            // 시간 저장(order by 용)
             const createdTime = timestamp.fromDate(new Date());
-
+            const createdDate = GetCurDayTime('/',':');
+            console.log(createdDate);
             // docRef : 참조(컬랙션 이름)
             // addDoc : 컬렉션에 문서를 추가
-            const docRef = await addDoc(colRef,{ ...doc, createdTime});
+            const docRef = await addDoc(colRef,{ ...doc, createdTime, createdDate});
+            // const docRef = await addDoc(colRef,{ ...doc, createdTime});
             console.log('저장 docRef',docRef);
             dispatch({ type: 'addDoc', payload: docRef });
         } catch (error) {

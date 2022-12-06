@@ -6,6 +6,7 @@ import Nav from './components/Nav';
 import Home from './pages/home/Home'
 import Login from './pages/login/Login'
 import Signup  from './pages/signup/Signup';
+import Input from './pages/home/Input';
 import { appAuth } from './firebase/config';
 import {useEffect} from "react";
 import { useAuthContext } from './hooks/useAuthContext';
@@ -50,6 +51,12 @@ function App() {
                    element={!user
                             ?<Signup />
                           :<Navigate replace={true} to="/" />}> 
+            </Route>
+            {/* 로그인이 되어있지 않다면 글작성 못하게... */}
+            <Route path='/input' 
+                   element={user
+                            ?<Input />
+                          :<Navigate replace={true} to="/login" />}> 
             </Route>
           </Routes>
         </BrowserRouter>

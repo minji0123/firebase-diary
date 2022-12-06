@@ -25,11 +25,11 @@ export default function Nav(){
                 {user &&
                     <li>
                         <strong>환영합니다 {user.displayName} 님!</strong>
+                        <Link to="/input" >글작성</Link>
                         <button type='button' onClick={logout}>로그아웃</button>
                     </li>
                 }
             </ul>
-
         </nav>
     )
 }
