@@ -14,8 +14,9 @@ export const useCollection = (transaction, myQuery) => { // myQuery: 파이어�
     useEffect(() => {
         let q;
         if(myQuery){
-            // q = query(collection(appFireStore, transaction),where(...myQuery),orderBy("createdTime","desc")); -> 나중에 다시 살릴거임...
-            q = query(collection(appFireStore, transaction));
+            // q = query(collection(appFireStore, transaction),where(...myQuery),orderBy("createdTime","desc")); //-> 나중에 다시 살릴거임...
+            q = query(collection(appFireStore, transaction),where(...myQuery)); //-> 나중에 다시 살릴거임...
+            // q = query(collection(appFireStore, transaction));
             /**
              * 쿼리문 두개 이상 사용하면 index 를 생성해줘야 함
              */
@@ -23,14 +24,12 @@ export const useCollection = (transaction, myQuery) => { // myQuery: 파이어�
         // onSnapshot: 가장 최근 컬랙션의 내용 반환 
         // unsubscribe: 데이터 수신을 중단(데이터 오는거 기다릴 필요가 없을때 사용.)
         const unsubscribe = onSnapshot(myQuery ? q : (collection(appFireStore, transaction)),
-
+            
             // 응답받은 컬랙션을 snapshot에 저장
             (snapshot) => {
                 let result = [];
-
                 // 배열형태로 저장되어있음 => forEach 사용
                 snapshot.docs.forEach((doc) => {
-
                     // document 데이터랑 id 값 push 해주기
                     result.push({ ...doc.data(), id: doc.id });
                 })
@@ -46,6 +45,5 @@ export const useCollection = (transaction, myQuery) => { // myQuery: 파이어�
         return unsubscribe; // clean-up 함수
 
     }, [collection])// 매번 실행될 필요가 없고, 컬랙션 변화가 
-
     return { documents, error }
 }

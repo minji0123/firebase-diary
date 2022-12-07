@@ -3,7 +3,7 @@
 import { useReducer } from "react"
 import { appFireStore,timestamp } from "../firebase/config"
 import { addDoc, deleteDoc,doc, collection } from "firebase/firestore"
-import  {today, GetCurDayTime, TimeString }  from "../utils/DateUtil.js"
+import  {GetCurDayTime ,GetUniqueNum }  from "../utils/DateUtil.js"
 
 // 우리가 받을 응답을 저장할 객체 (객체이기 때문에 리듀서로 관리)
 // 상태를 관리할 때 error나 isPending을 useReducer로 한번에 관리
@@ -59,12 +59,13 @@ export const useFirestore = (transaction) => {
             // 시간 저장(order by 용)
             const createdTime = timestamp.fromDate(new Date());
             const createdDate = GetCurDayTime('/',':');
-            console.log(createdDate);
+
+            // 유일키 저장
+            const createdUqe = GetUniqueNum();
+
             // docRef : 참조(컬랙션 이름)
             // addDoc : 컬렉션에 문서를 추가
-            const docRef = await addDoc(colRef,{ ...doc, createdTime, createdDate});
-            // const docRef = await addDoc(colRef,{ ...doc, createdTime});
-            console.log('저장 docRef',docRef);
+            const docRef = await addDoc(colRef,{ ...doc, createdTime, createdDate,createdUqe});
             dispatch({ type: 'addDoc', payload: docRef });
         } catch (error) {
             dispatch({ type: 'error', payload: error.message });
@@ -78,7 +79,6 @@ export const useFirestore = (transaction) => {
         try {
 
             const docRef = await deleteDoc(doc(colRef,id));
-            console.log('삭제 docRef',docRef);
             dispatch({ type: 'deleteDoc', payload: docRef });
         } catch (error) {
             dispatch({ type: 'error', payload: error.message });

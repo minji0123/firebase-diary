@@ -2,7 +2,6 @@
 
 import { useAuthContext } from '../../hooks/useAuthContext'
 import { useCollection } from '../../hooks/useCollection';
-import DiaryForm from './DiaryForm';
 import DiaryList from './DiaryList';
 import styles from './Home.module.css';
 
@@ -12,8 +11,10 @@ export default function Home() {
     const {user} = useAuthContext();
     
     // firebase 에 저장된 데이터 받아오기
-    const {documents,error} = useCollection("diary",["uid","==",user.uid]);
-
+    // const {documents,error} = useCollection("diary",["uid","==",user.uid]);
+    const {documents,error} = useCollection("diary");
+        console.log(documents);
+    
     return (
         <main className={styles.cont}>
             <ul className={styles.content_list}>

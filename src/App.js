@@ -7,6 +7,8 @@ import Home from './pages/home/Home'
 import Login from './pages/login/Login'
 import Signup  from './pages/signup/Signup';
 import Input from './pages/home/Input';
+import Detail from './pages/detail/Detail';
+
 import { appAuth } from './firebase/config';
 import {useEffect} from "react";
 import { useAuthContext } from './hooks/useAuthContext';
@@ -57,6 +59,12 @@ function App() {
                    element={user
                             ?<Input />
                           :<Navigate replace={true} to="/login" />}> 
+            </Route>
+            {/* 임시로 route 팜... */}
+            <Route path='/detail/:id' 
+                   element={user
+                      ?<Detail />
+                      :<Navigate replace={true} to="/login" />}> 
             </Route>
           </Routes>
         </BrowserRouter>
