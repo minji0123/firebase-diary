@@ -1,31 +1,30 @@
 /* eslint-disable*/
 
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useAuthContext } from '../../hooks/useAuthContext'
-import { useCollection } from '../../hooks/useCollection';
+import {useNavigate} from 'react-router-dom';
+import { useFirestore } from "../../hooks/useFirestore";
 
-import styles from './Detail.module.css';
+export default function DetailForm({data}){
+    const {deleteDocument} = useFirestore('diary');    
+    const navigate = useNavigate();
 
-export default function Detail(props){
 
-    //유저정보
-    const {user} = useAuthContext();
+    return(
+        <>        
+            {data.map((item) => {
+                return (
+                    <div key={item.id}>
+                        <h1>{item.title}</h1>
+                        <p>{item.displayName} 님</p>
+                        <p>{item.createdDate}</p>
+                        <p>{item.text}</p>
+                        <button type='button' onClick={() => {deleteDocument(item.id)
+                                                                navigate('/');
+                        }}>삭제</button>
 
-    // url 파라미터 id
-    let {id} = useParams();
-    const {documents,error} = useCollection("diary",["createdUqe","==",id]);
-    console.log(documents);
-    
-    return (
-        <>
+                    </div>
+                )
+            })}
 
-            <div className={styles.main}>
-                <h1>{documents[0].title}</h1>
-                <p>{documents[0].displayName} 님</p>
-            </div>
-            
         </>
-    )
-    
+    )   
 }

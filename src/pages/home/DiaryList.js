@@ -8,7 +8,7 @@ import styles from './Home.module.css'
 // 근데 비구조화할당 쓸거임
 
 export default function DiaryList({ diaries }) {
-    const {deleteDocument} = useFirestore('diary');
+    const {deleteDocument} = useFirestore('diary');    
     const navigate = useNavigate();
 
     let ClickToMoveDetail = (id) => {
@@ -25,7 +25,6 @@ export default function DiaryList({ diaries }) {
                         onClick={() => ClickToMoveDetail(item.createdUqe)}
                     >
                         <strong className={styles.title}>{item.title}</strong>
-                        <p className={styles.text}>{item.text}</p>
                         <p className={styles.text}> {item.displayName ? item.displayName : '익명'}  님 </p>
                         <p className={styles.text}> {item.createdDate} </p>
                         <button type='button' onClick={() => {deleteDocument(item.id)}}>삭제</button>

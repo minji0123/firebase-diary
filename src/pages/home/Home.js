@@ -13,7 +13,6 @@ export default function Home() {
     // firebase 에 저장된 데이터 받아오기
     // const {documents,error} = useCollection("diary",["uid","==",user.uid]);
     const {documents,error} = useCollection("diary");
-        console.log(documents);
     
     return (
         <main className={styles.cont}>

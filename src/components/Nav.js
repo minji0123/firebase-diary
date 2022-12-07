@@ -24,7 +24,7 @@ export default function Nav(){
                 }
                 {user &&
                     <li>
-                        <strong>환영합니다 {user.displayName} 님!</strong>
+                        <strong>안녕하세요 {user.displayName} 님</strong>
                         
                         <button type='button' ><Link to="/input" >글작성</Link></button>
                         <button type='button' onClick={logout}>로그아웃</button>

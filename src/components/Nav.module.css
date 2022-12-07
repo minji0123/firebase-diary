@@ -1,7 +1,6 @@
 .nav {
     color: #fff;
-
-    background-color: #EB5E28;
+    background-color:#ec8a63;
     padding: 20px 50px;
 }
 
@@ -27,7 +26,7 @@
     margin-left: 20px;
     padding: 6px 12px;
     border-radius: 10px;
-    background-color: rgb(16, 119, 56);
+    background-color:rgb(94, 143, 112);
     border:none;
     color:#fff;
     cursor: pointer;

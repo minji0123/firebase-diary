@@ -1,0 +1,9 @@
+.detail_form {
+    max-width: 960px;
+    margin: 60px auto;
+    padding: 20px;
+}
+
+.login_form fieldset{
+    border-radius: 10px;
+}
