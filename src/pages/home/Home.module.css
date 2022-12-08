@@ -66,6 +66,7 @@
     padding: 30px;
     position: relative;
     border-left: 4px solid     rgb(94, 143, 112);
+    cursor: pointer;
     
 }
 

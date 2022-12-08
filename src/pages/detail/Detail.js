@@ -1,9 +1,8 @@
 /* eslint-disable*/
 
-import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext'
-import { useCollection } from '../../hooks/useCollection';
+import { useCollectionDtl } from '../../hooks/useCollectionDtl';
 
 import DetailForm from './DetailForm';
 import styles from './Detail.module.css';
@@ -15,13 +14,13 @@ export default function Detail(props){
 
     // url 파라미터 id
     let {id} = useParams();
-    const {documents,error} = useCollection("diary",["createdUqe","==",id]);
+    const {documents,error} = useCollectionDtl("diary",["createdUqe","==",id]);
     
     return (
         <main className={styles.detail_form}>
             <fieldset>
                 {error && <strong>{error}</strong>}
-                {documents ? <DetailForm data={documents}/> : <p>오류</p>}
+                {documents && <DetailForm data={documents}/>}
             </fieldset>
         </main>
     )

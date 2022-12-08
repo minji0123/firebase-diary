@@ -1,12 +1,12 @@
 /* eslint-disable*/
 
 // 컬렉션에 접근하여 데이터를 불러오는 기능을 위한 훅
-// 메인화면에서 사용
+// 메인화면 외에 사용
 import { appFireStore } from "../firebase/config"
 import { useEffect, useState } from "react"
-import { onSnapshot,collection,query,where, orderBy } from "firebase/firestore";
+import { onSnapshot,collection,query,where } from "firebase/firestore";
 
-export const useCollection = (transaction, myQuery) => { // myQuery: 파이어스토어 쿼리 사용을 위한 파라미터
+export const useCollectionDtl = (transaction, myQuery) => { // myQuery: 파이어스토어 쿼리 사용을 위한 파라미터
 
     // documents 데이터 관리, error 관리
     const [documents, setDocuments] = useState(null);
@@ -16,11 +16,7 @@ export const useCollection = (transaction, myQuery) => { // myQuery: 파이어�
     useEffect(() => {
         let q;
         if(myQuery){
-            // q = query(collection(appFireStore, transaction),where(...myQuery),orderBy("createdTime","desc"));
-            q = query(collection(appFireStore, transaction),orderBy("createdTime","desc"));
-            /**
-             * 쿼리문 두개 이상 사용하면 index 를 생성해줘야 함
-             */
+            q = query(collection(appFireStore, transaction),where(...myQuery));
         }
         // onSnapshot: 가장 최근 컬랙션의 내용 반환 
         // unsubscribe: 데이터 수신을 중단(데이터 오는거 기다릴 필요가 없을때 사용.)

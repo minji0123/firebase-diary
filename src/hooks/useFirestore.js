@@ -2,7 +2,7 @@
 // 컬렉션을 만들고 데이터를 넘겨주는 작업을 위한 훅
 import { useReducer } from "react"
 import { appFireStore,timestamp } from "../firebase/config"
-import { addDoc, deleteDoc,doc, collection } from "firebase/firestore"
+import { addDoc,updateDoc, deleteDoc,doc, collection } from "firebase/firestore"
 import  {GetCurDayTime ,GetUniqueNum }  from "../utils/DateUtil.js"
 
 // 우리가 받을 응답을 저장할 객체 (객체이기 때문에 리듀서로 관리)
@@ -29,6 +29,8 @@ const storeReducer = (state, action) => {
             return { isPending: true, document: null,            success: false, error: null }
         case 'addDoc':
             return { isPending: false, document: action.payload, success: true,  error: null }
+        case 'editDoc':
+            return { isPending: false, document: action.payload, success: true,  error: null }
         case 'deleteDoc':
             return { isPending: false, document: action.payload, success: true,  error: null }
         case 'error':
@@ -50,7 +52,7 @@ export const useFirestore = (transaction) => {
 		// 원하는 컬렉션의 참조를 인자로 보내주면 파이어스토어가 자동으로 해당 컬렉션을 생성해줌 
     const colRef = collection(appFireStore, transaction);
 
-    // 컬렉션에 문서 를 저장
+    // 컬렉션에 문서를 저장
     const addDocument = async (doc) => {
 
         dispatch({ type: "isPending" });
@@ -77,7 +79,6 @@ export const useFirestore = (transaction) => {
 
         dispatch({ type: "isPending" });
         try {
-
             const docRef = await deleteDoc(doc(colRef,id));
             dispatch({ type: 'deleteDoc', payload: docRef });
         } catch (error) {
@@ -85,6 +86,20 @@ export const useFirestore = (transaction) => {
         }
     }
 
-    return { addDocument, deleteDocument, response }
+    // 컬렉션에서 문서를 삭제
+    const editDocument = async (doc) => {
+
+        dispatch({ type: "isPending" });
+        try {
+
+            // docRef : 참조(컬랙션 이름)
+            // addDoc : 컬렉션에 문서를 추가
+            const docRef = await updateDoc(colRef,{ ...doc});
+            dispatch({ type: 'editDoc', payload: docRef });
+        } catch (error) {
+            dispatch({ type: 'error', payload: error.message });
+        }
+    }
+    return { addDocument, deleteDocument, editDocument, response }
 
 }

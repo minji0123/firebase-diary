@@ -26,9 +26,17 @@ export default function Signup(){
 
     const handleSubmit = (event) => {
         // submit 은 기본적으로 페이지 리로딩을 불러일으키기 때문에... 그런 현상을 막기 위해 적어준다.
-
         event.preventDefault();
-        signup(email,password,displayName);
+        
+        if(password.length < 6){
+            alert('6자리 비밀번호를 입력해주세요');
+        }else if(!document.writeln(isNaN(password))){
+            alert('비밀번호는 숫자로 입력해주세요');
+            location.reload();
+        }else{
+            signup(email,password,displayName);
+        }
+        
     }
 
     return (
@@ -41,7 +49,8 @@ export default function Signup(){
                     <input type="email" id="myEmail" required onChange={handleData} value={email} />
 
                     <label htmlFor="myPassWord">password : </label>
-                    <input type="password" id="myPassWord" required onChange={handleData} value={password} />
+                    <input type="password" id="myPassWord" required onChange={handleData} value={password} 
+                    />
 
                     <label htmlFor="myNickName">닉네임 : </label>
                     <input type="text" id="myNickName" required onChange={handleData} value={displayName} />

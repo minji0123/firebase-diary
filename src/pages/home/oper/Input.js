@@ -1,8 +1,8 @@
 /* eslint-disable*/
 
-import { useAuthContext } from '../../hooks/useAuthContext'
-import DiaryForm from './DiaryForm';
-import styles from './Home.module.css';
+import { useAuthContext } from '../../../hooks/useAuthContext'
+import DiaryForm from '../InputForm.js'
+import styles from '../Home.module.css';
 
 export default function Input() {
 

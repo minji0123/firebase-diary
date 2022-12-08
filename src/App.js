@@ -6,9 +6,9 @@ import Nav from './components/Nav';
 import Home from './pages/home/Home'
 import Login from './pages/login/Login'
 import Signup  from './pages/signup/Signup';
-import Input from './pages/home/Input';
+import Input from './pages/home/oper/Input';
 import Detail from './pages/detail/Detail';
-
+import Edit from './pages/home/oper/Edit';
 import { appAuth } from './firebase/config';
 import {useEffect} from "react";
 import { useAuthContext } from './hooks/useAuthContext';
@@ -60,10 +60,16 @@ function App() {
                             ?<Input />
                           :<Navigate replace={true} to="/login" />}> 
             </Route>
-            {/* 임시로 route 팜... */}
+            {/* 임시로 route 팜...1 */}
             <Route path='/detail/:id' 
                    element={user
                       ?<Detail />
+                      :<Navigate replace={true} to="/login" />}> 
+            </Route>
+            {/* 임시로 route 팜...2 */}
+            <Route path='/edit/:id' 
+                   element={user
+                      ?<Edit />
                       :<Navigate replace={true} to="/login" />}> 
             </Route>
           </Routes>

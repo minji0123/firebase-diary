@@ -27,7 +27,7 @@ export default function DiaryList({ diaries }) {
                         <strong className={styles.title}>{item.title}</strong>
                         <p className={styles.text}> {item.displayName ? item.displayName : '익명'}  님 </p>
                         <p className={styles.text}> {item.createdDate} </p>
-                        <button type='button' onClick={() => {deleteDocument(item.id)}}>삭제</button>
+                        {/* <button type='button' onClick={() => {deleteDocument(item.id)}}>삭제</button> */}
                     </li>
                 )
             })}
