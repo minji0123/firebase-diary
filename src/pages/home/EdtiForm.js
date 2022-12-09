@@ -22,8 +22,10 @@ export default function EdtiForm({data}) {
         }
     }
 
+    
     // 기존 내용 넣어주기
     useEffect(()=>{
+        console.log(data)
         if(data){
             data.map((a,i) => {
                 setTitle(a.title);
@@ -32,15 +34,14 @@ export default function EdtiForm({data}) {
                 setDisplayName(a.displayName);
             })
         }
-
-    });
+    },data);
 
     const handleSubmit = (event) => {
         event.preventDefault();
         editDocument({uid, displayName, title, text});// uid:작성한 유저 id
 
-        alert('아직이양..😀');
-        navigate("/")
+        // alert('아직이양..😀');
+        // navigate("/")
     }
 
     return (

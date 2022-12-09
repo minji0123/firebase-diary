@@ -86,7 +86,7 @@ export const useFirestore = (transaction) => {
         }
     }
 
-    // 컬렉션에서 문서를 삭제
+    // 컬렉션에서 문서를 수정
     const editDocument = async (doc) => {
 
         dispatch({ type: "isPending" });
