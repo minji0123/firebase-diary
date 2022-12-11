@@ -9,29 +9,21 @@ import Signup  from './pages/signup/Signup';
 import Input from './pages/home/oper/Input';
 import Detail from './pages/detail/Detail';
 import Edit from './pages/home/oper/Edit';
-import { appAuth } from './firebase/config';
-import {useEffect} from "react";
 import { useAuthContext } from './hooks/useAuthContext';
+import styled from './App.css';
 
 
 function App() {
 
   const {isAuthReady, user } = useAuthContext();
-    // 파이어베이스가 실행되는 초기에 유저가 로그인 되어있는지 확인하는 로직은 비동기로 작동하기 때문에 
-    // 시간이 필요함. 그래서 useEffect 에 넣어서 출력시켜줘야됨
-  // useEffect(() => {
-  //   appAuth.onAuthStateChanged((user) => {
-  //       console.log('로그인상태: ',user);
 
-  //   });
-  // })
   
   /**
    * Navigate
    * 
    */
   return (
-    <div className="App">
+    <div>
       {isAuthReady 
       ? (
         <BrowserRouter>
@@ -72,6 +64,9 @@ function App() {
                       ?<Edit />
                       :<Navigate replace={true} to="/login" />}> 
             </Route>
+
+            {/* 없는 페이지 */}
+            <Route path="*" element={<div>없는 페이지에요</div>}/>
           </Routes>
         </BrowserRouter>
       )

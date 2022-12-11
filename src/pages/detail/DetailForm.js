@@ -3,6 +3,7 @@
 import { useAuthContext } from '../../hooks/useAuthContext';
 import {useNavigate} from 'react-router-dom';
 import { useFirestore } from "../../hooks/useFirestore";
+import styles from './Detail.module.css';
 
 export default function DetailForm({data}){
     
@@ -18,25 +19,29 @@ export default function DetailForm({data}){
             {data.map((item) => {
                 return (
                     <div key={item.id}>
-                        <h1>{item.title}</h1>
-                        <p>{item.displayName} 님</p>
-                        <p>{item.createdDate}</p>
+                        <div className={styles.btn}>
+                            <h1>{item.title}</h1>
+                            {item.uid === user.uid
+                            ?<>
+                                <button type='button' 
+                                    onClick={() => {
+                                                navigate(`/edit/${item.createdUqe}`);
+                                            }}
+                                >수정</button>
+                                <button type='button' 
+                                    onClick={() => {deleteDocument(item.id);
+                                                    navigate('/');
+                                            }}
+                                >삭제</button>
+                            </>
+                            : ''
+                            }
+                        </div>
+                        <p className={styles.left}>{item.displayName} 님</p>
+                        <p className={styles.right}>{item.createdDate}</p>
+                        <p className={styles.clear}></p>
+                        <hr/>
                         <p>{item.text}</p>
-                        {item.uid === user.uid
-                        ?<>
-                            <button type='button' 
-                                onClick={() => {deleteDocument(item.id);
-                                                navigate('/');
-                                        }}
-                            >삭제</button>
-                            <button type='button' 
-                                onClick={() => {
-                                            navigate(`/edit/${item.createdUqe}`);
-                                        }}
-                            >수정</button>
-                        </>
-                        : ''
-                        }
                         
                     </div>
                 )

@@ -87,15 +87,20 @@ export const useFirestore = (transaction) => {
     }
 
     // 컬렉션에서 문서를 수정
-    const editDocument = async (doc) => {
-
+    const editDocument = async (documents,id) => {
         dispatch({ type: "isPending" });
+        
+        // const 임시 = doc(appFireStore,'diary',id);
+
         try {
+            const createdTime = timestamp.fromDate(new Date());
+            const createdDate = GetCurDayTime('/',':');
 
             // docRef : 참조(컬랙션 이름)
-            // addDoc : 컬렉션에 문서를 추가
-            const docRef = await updateDoc(colRef,{ ...doc});
+            // updateDoc : 컬렉션에 있는 문서 수정
+            const docRef = await updateDoc(doc(colRef,id),{ ...documents, createdTime,createdDate});
             dispatch({ type: 'editDoc', payload: docRef });
+
         } catch (error) {
             dispatch({ type: 'error', payload: error.message });
         }

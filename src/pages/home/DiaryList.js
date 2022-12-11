@@ -1,14 +1,9 @@
 /* eslint-disable*/
 
 import {useNavigate} from 'react-router-dom';
-import { useFirestore } from '../../hooks/useFirestore'
 import styles from './Home.module.css'
 
-// diaries는 props 로 전달되기 때문에 원래는 props.diaries 로 접근해야됨
-// 근데 비구조화할당 쓸거임
-
 export default function DiaryList({ diaries }) {
-    const {deleteDocument} = useFirestore('diary');    
     const navigate = useNavigate();
 
     let ClickToMoveDetail = (id) => {
@@ -24,10 +19,10 @@ export default function DiaryList({ diaries }) {
                     <li key={item.id}
                         onClick={() => ClickToMoveDetail(item.createdUqe)}
                     >
-                        <strong className={styles.title}>{item.title}</strong>
-                        <p className={styles.text}> {item.displayName ? item.displayName : '익명'}  님 </p>
-                        <p className={styles.text}> {item.createdDate} </p>
-                        {/* <button type='button' onClick={() => {deleteDocument(item.id)}}>삭제</button> */}
+                        <h1 className={styles.title}>{item.title}</h1>
+                        <p className={styles.text}> {item.displayName ? item.displayName : '익명'} 님 </p>
+                        <p className={styles.time}> {item.createdDate} </p>
+                        <p className={styles.clear}></p>
                     </li>
                 )
             })}

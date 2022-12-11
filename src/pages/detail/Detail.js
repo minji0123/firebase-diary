@@ -18,10 +18,10 @@ export default function Detail(props){
     
     return (
         <main className={styles.detail_form}>
-            <fieldset>
+            <div>
                 {error && <strong>{error}</strong>}
                 {documents && <DetailForm data={documents}/>}
-            </fieldset>
+            </div>
         </main>
     )
     
