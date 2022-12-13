@@ -41,6 +41,7 @@ export default function DetailForm({data}){
                         <p className={styles.right}>{item.createdDate}</p>
                         <p className={styles.clear}></p>
                         <hr/>
+                        <img src={item.url} />
                         <p>{item.text}</p>
                         
                     </div>

@@ -1,12 +1,13 @@
 /* eslint-disable*/
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useNavigate } from "react-router-dom";
 import { useFirestore } from "../../hooks/useFirestore";
 export default function DiaryForm({uid,displayName}) {
 
     const [title, setTitle] = useState("");
     const [text, setText] = useState("");
+    const [pic, setPic] = useState("");
     const { addDocument, response } = useFirestore("diary");// 컬랙션 이름 파라미터로 넣어주기
     const navigate = useNavigate(); // 리다이렉트
 
@@ -17,21 +18,24 @@ export default function DiaryForm({uid,displayName}) {
             setText(event.target.value);
         }
     }
-
-    // 내용 입력 후 필드값 초기화
-    useEffect(()=>{
-        if(response.success){
-            setText('');
-            setTitle('');
-        }
-    },[response.success]);
    
     const handleSubmit = (event) => {
         event.preventDefault();
-        addDocument({uid, displayName, title, text});// uid:작성한 유저 id
-        navigate("/")
-    }
-
+        addDocument({uid, displayName, title, text },pic);// uid:작성한 유저 id
+        // navigate("/")
+    } 
+    
+    // 이미지 
+    const fileInput = useRef(null);
+  
+    const handleButtonClick = (event) => {
+      fileInput.current.click();
+    };
+    
+    const handleChange = (event) => {
+        setPic(event.target.files[0].name);
+        console.log(event.target.files[0]);
+    };
     return (
         <>
             <form onSubmit={handleSubmit}>
@@ -43,7 +47,18 @@ export default function DiaryForm({uid,displayName}) {
                     <label htmlFor="txt">내용 : </label>
                     <textarea id="txt" type='text' value={text} required onChange={handleData}></textarea>
 
-                    <button  type="submit">저장하기</button>
+                    <input  type="file"
+                            accept="image/*" 
+                            ref={fileInput}
+                            onChange={handleChange}
+                            style={{ display: "none" }}
+                             />
+
+                    <input id="pic" type='text' value={pic} onChange={handleChange} disabled />
+
+                    <button onClick={handleButtonClick}>사진 업로드</button>
+
+                    <button type="submit">저장하기</button>
                 </fieldset>
             </form>
         </>

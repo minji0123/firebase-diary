@@ -1,8 +1,9 @@
 /* eslint-disable*/
 // 컬렉션을 만들고 데이터를 넘겨주는 작업을 위한 훅
-import { useReducer } from "react"
-import { appFireStore,timestamp } from "../firebase/config"
+import { useReducer,useState } from "react"
+import { appFireStore, timestamp, storage } from "../firebase/config"
 import { addDoc,updateDoc, deleteDoc,doc, collection } from "firebase/firestore"
+import { ref, uploadBytesResumable,getDownloadURL } from "firebase/storage";
 import  {GetCurDayTime ,GetUniqueNum }  from "../utils/DateUtil.js"
 
 // 우리가 받을 응답을 저장할 객체 (객체이기 때문에 리듀서로 관리)
@@ -46,6 +47,7 @@ export const useFirestore = (transaction) => {
     // response에 요청에 대한 firestore 의 응답 저장
     // 저장되는 데이터 === 저장 성공 또는 요청한 문서 데이터(객체)
     const [response, dispatch] = useReducer(storeReducer, initState);
+    let [url,setUrl] = useState('');
 
 
     // colRef : 만들 컬랙션의 참조 (컬랙션 이름)
@@ -53,25 +55,57 @@ export const useFirestore = (transaction) => {
     const colRef = collection(appFireStore, transaction);
 
     // 컬렉션에 문서를 저장
-    const addDocument = async (doc) => {
+    const addDocument = async (doc,pic) => {
+
+        console.log(pic);
+        // 시간 저장(order by 용)
+        const createdTime = timestamp.fromDate(new Date());
+        const createdDate = GetCurDayTime('/',':');
+
+        // 유일키 저장
+        const createdUqe = GetUniqueNum();
+
+        // 이미지 업로드 경로 저장
+        const file = ref(storage, pic);
+        const storageRef = ref(storage, 'images/'+pic );
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
 
         dispatch({ type: "isPending" });
         try {
 
-            // 시간 저장(order by 용)
-            const createdTime = timestamp.fromDate(new Date());
-            const createdDate = GetCurDayTime('/',':');
+            /*===============================================
+             * 이미지 저장
+             *===================================================*/
+            console.log(storageRef);
 
-            // 유일키 저장
-            const createdUqe = GetUniqueNum();
-
+            uploadTask.on('state_changed', 
+            (snapshot) => {
+                null
+            }, 
+            (error) => {
+                console.error('실패사유는', error);
+            }, 
+            () => {
+              getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                console.log('업로드된 경로는', downloadURL);
+                setUrl(downloadURL);
+              });
+            }
+          );
+            console.log('들어가나??',url);
+            /*===============================================
+             * 데이터 저장
+             *===================================================*/
             // docRef : 참조(컬랙션 이름)
             // addDoc : 컬렉션에 문서를 추가
-            const docRef = await addDoc(colRef,{ ...doc, createdTime, createdDate,createdUqe});
+            const docRef = await addDoc(colRef,{ ...doc, createdTime, createdDate,createdUqe,url});
             dispatch({ type: 'addDoc', payload: docRef });
+            console.log('저장완료');
         } catch (error) {
             dispatch({ type: 'error', payload: error.message });
         }
+
     }
 
     // 컬렉션에서 문서를 삭제
