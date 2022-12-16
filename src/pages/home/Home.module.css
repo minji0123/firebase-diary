@@ -90,6 +90,9 @@
 .content_list .clear {
     clear: both;
 }
+.content_list .img {
+    width: 30%;
+}
 .content_list button {
     position: absolute;
     top: 0;

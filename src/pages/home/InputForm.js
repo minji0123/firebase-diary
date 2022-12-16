@@ -57,7 +57,7 @@ export default function DiaryForm({uid,displayName}) {
 
                     <input id="pic" type='text' value={pic} onChange={handleChange} disabled />
 
-                    <button onClick={handleButtonClick}>사진 업로드</button>
+                    <p onClick={handleButtonClick}>사진 업로드</p>
 
                     <button onClick={handleSubmit} type="submit">저장하기</button>
                 </fieldset>

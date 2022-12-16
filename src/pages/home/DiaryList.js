@@ -19,8 +19,9 @@ export default function DiaryList({ diaries }) {
                     <li key={item.id}
                         onClick={() => ClickToMoveDetail(item.createdUqe)}
                     >
+                        <img  className={styles.img} src={item.downloadURL} />
                         <h1 className={styles.title}>{item.title}</h1>
-                        <p className={styles.text}> {item.displayName ? item.displayName : '익명'} 님 </p>
+                        <p className={styles.text}> {item.displayName ? item.displayName : '익명'}</p>
                         <p className={styles.time}> {item.createdDate} </p>
                         <p className={styles.clear}></p>
                     </li>

@@ -14,7 +14,7 @@ export default function Nav(){
 
     return(
         <nav className={styled.nav}>
-            <h1 className={styled.tit}><Link to="/" >Secret Note</Link></h1>
+            <h1 className={styled.tit}><Link to="/" >My Mini Board</Link></h1>
             <ul className={styled.list_nav}>
                 {!user &&
                     <>
@@ -24,7 +24,7 @@ export default function Nav(){
                 }
                 {user &&
                     <li>
-                        <strong>{user.displayName} 님 반가워요</strong>
+                        <strong>{user.displayName} 반가워요</strong>
                         
                         <button type='button' ><Link to="/input" >글작성</Link></button>
                         <button type='button' onClick={logout}>로그아웃</button>
