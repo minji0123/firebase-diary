@@ -19,6 +19,11 @@
 .detail_form .clear {
     clear: both;
 }
+
+.detail_form .img {
+    width: 100%;
+}
+
 .detail_form button {
     background-color:    rgb(94, 143, 112);
     border: 0;

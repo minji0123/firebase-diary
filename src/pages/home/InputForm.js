@@ -22,7 +22,7 @@ export default function DiaryForm({uid,displayName}) {
     const handleSubmit = (event) => {
         event.preventDefault();
         addDocument({uid, displayName, title, text },pic);// uid:작성한 유저 id
-        // navigate("/")
+        navigate("/")
     } 
     
     // 이미지 
@@ -33,12 +33,13 @@ export default function DiaryForm({uid,displayName}) {
     };
     
     const handleChange = (event) => {
-        setPic(event.target.files[0].name);
+        setPic(event.target.files[0]);
         console.log(event.target.files[0]);
     };
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            {/* <form onSubmit={handleSubmit}> */}
+            <form>
                 <fieldset>
                     <legend>기록하기</legend>
                     <label htmlFor="tit">제목 : </label>
@@ -58,7 +59,7 @@ export default function DiaryForm({uid,displayName}) {
 
                     <button onClick={handleButtonClick}>사진 업로드</button>
 
-                    <button type="submit">저장하기</button>
+                    <button onClick={handleSubmit} type="submit">저장하기</button>
                 </fieldset>
             </form>
         </>
