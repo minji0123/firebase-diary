@@ -5,6 +5,7 @@ import { useAuthContext } from '../../hooks/useAuthContext'
 import { useCollectionDtl } from '../../hooks/useCollectionDtl';
 
 import DetailForm from './DetailForm';
+import Comment from '../comment/Comment';
 import styles from './Detail.module.css';
 
 export default function Detail(props){
@@ -21,6 +22,7 @@ export default function Detail(props){
             <div>
                 {error && <strong>{error}</strong>}
                 {documents && <DetailForm data={documents}/>}
+                <Comment></Comment>
             </div>
         </main>
     )
