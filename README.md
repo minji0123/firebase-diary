@@ -11,9 +11,34 @@ https://mydiary-b33c4.firebaseapp.com/
 #### React
 <a href="#1" style="color:pink">react-router-dom</a>  
 <a href="#2" style="color:pink">custom hook</a>  
-<a href="#2" style="color:pink">useReducer</a>  
-
-
+<a href="#3" style="color:pink">useReducer</a>  
 
 ### Back & DB
 #### Firebase
+
+<hr/>
+
+<h3 id="1"> react-router-dom </h3>  
+
+```js
+
+```
+
+<hr/>
+
+<h3 id="2"> custom hook </h3>  
+
+```js
+
+```
+
+<hr/>
+
+<h3 id="3"> useReducer </h3>  
+
+```js
+
+```
+
+<hr/>
+

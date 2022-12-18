@@ -64,7 +64,6 @@ function App() {
                       ?<Edit />
                       :<Navigate replace={true} to="/login" />}> 
             </Route>
-
             {/* 없는 페이지 */}
             <Route path="*" element={<div>없는 페이지에요</div>}/>
           </Routes>
