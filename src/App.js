@@ -52,13 +52,13 @@ function App() {
                             ?<Input />
                           :<Navigate replace={true} to="/login" />}> 
             </Route>
-            {/* 임시로 route 팜...1 */}
+            {/* detail 페이지 */}
             <Route path='/detail/:id' 
                    element={user
                       ?<Detail />
                       :<Navigate replace={true} to="/login" />}> 
             </Route>
-            {/* 임시로 route 팜...2 */}
+            {/* edit 페이지 */}
             <Route path='/edit/:id' 
                    element={user
                       ?<Edit />
