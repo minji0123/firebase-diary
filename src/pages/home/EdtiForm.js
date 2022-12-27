@@ -25,7 +25,7 @@ export default function EdtiForm({data}) {
     
     // 기존 내용 넣어주기
     useEffect(()=>{
-        console.log(data)
+        // console.log(data);
         if(data){
             data.map((a,i) => {
                 setTitle(a.title);

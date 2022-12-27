@@ -8,7 +8,7 @@ export default function Input() {
 
     //유저정보 받아서 diaryform 에 넣어줄거임(props로...)
     const {user} = useAuthContext();
-    console.log(user);
+    // console.log(user);
     
     return (
         <main className={styles.cont}>

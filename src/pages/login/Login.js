@@ -24,7 +24,7 @@ export default function Login(){
     const handleSubmit = (event) => {
         // submit 은 기본적으로 페이지 리로딩을 불러일으키기 때문에... 그런 현상을 막기 위해 적어준다.
         event.preventDefault();
-        console.log('로그인: ',email, password);
+        // console.log('로그인: ',email, password);
         login(email, password);
     }
 

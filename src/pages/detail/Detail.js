@@ -16,13 +16,14 @@ export default function Detail(props){
     // url 파라미터 id
     let {id} = useParams();
     const {documents,error} = useCollectionDtl("diary",["createdUqe","==",id]);
-    console.log(documents)
+    // console.log(documents);
+    
     return (
         <main className={styles.detail_form}>
             <div>
                 {error && <strong>{error}</strong>}
                 {documents && <DetailForm data={documents}/>}
-                <Comment></Comment>
+                <Comment data={documents} />
             </div>
         </main>
     )

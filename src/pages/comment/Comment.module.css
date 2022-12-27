@@ -20,6 +20,11 @@
     border: 1px solid #e8e8e8;
     background-color: #fff;
 }
+.reply_user {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
 .lab_write {
     position: absolute;
     top: 7px;

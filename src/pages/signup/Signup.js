@@ -19,6 +19,8 @@ export default function Signup(){
             setEmail(event.target.value);
         } else if (event.target.type === "password") {
             setPassword(event.target.value);
+            // console.log(password);
+
         } else if (event.target.type === "text") {
             setDisplayName(event.target.value);
         }
@@ -30,9 +32,9 @@ export default function Signup(){
         
         if(password.length < 6){
             alert('6자리 비밀번호를 입력해주세요');
-        }else if(!document.writeln(isNaN(password))){
+        }else if(isNaN(password)){
             alert('비밀번호는 숫자로 입력해주세요');
-            location.reload();
+            // location.reload();
         }else{
             signup(email,password,displayName);
         }

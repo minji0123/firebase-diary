@@ -34,7 +34,7 @@ export default function DiaryForm({uid,displayName}) {
     
     const handleChange = (event) => {
         setPic(event.target.files[0]);
-        console.log(event.target.files[0]);
+        // console.log(event.target.files[0]);
     };
     return (
         <>
