@@ -6,7 +6,7 @@ import { appFireStore } from "../firebase/config"
 import { useEffect, useState } from "react"
 import { onSnapshot,collection,query,where, orderBy } from "firebase/firestore";
 
-export const useCollection = (transaction, myQuery) => { // myQuery: 파이어스토어 쿼리 사용을 위한 파라미터
+export const useCollection = (transaction) => {
 
     // documents 데이터 관리, error 관리
     const [documents, setDocuments] = useState(null);
@@ -15,16 +15,12 @@ export const useCollection = (transaction, myQuery) => { // myQuery: 파이어�
     // 💛 collection에 변화가 생길때마다 실행합니다. 때문에 항상 최신의 컬랙션 상태를 반환 받을 수 있습니다.
     useEffect(() => {
         let q;
-        if(myQuery){
-            // q = query(collection(appFireStore, transaction),where(...myQuery),orderBy("createdTime","desc"));
             q = query(collection(appFireStore, transaction),orderBy("createdTime","desc"));
-            /**
-             * 쿼리문 두개 이상 사용하면 index 를 생성해줘야 함
-             */
-        }
+            
         // onSnapshot: 가장 최근 컬랙션의 내용 반환 
         // unsubscribe: 데이터 수신을 중단(데이터 오는거 기다릴 필요가 없을때 사용.)
-        const unsubscribe = onSnapshot(myQuery ? q : (collection(appFireStore, transaction)),
+        // const unsubscribe = onSnapshot(myQuery ? q : (collection(appFireStore, transaction)),
+        const unsubscribe = onSnapshot(q ,
             
             // 응답받은 컬랙션을 snapshot에 저장
             (snapshot) => {

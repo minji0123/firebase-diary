@@ -29,11 +29,13 @@ function App() {
         <BrowserRouter>
           <Nav></Nav>
           <Routes>
-            {/* 로그인 되있으면 홈으로, 아니라면 로그인 화면으로 이동 */}
+            {/* as-is 로그인 되있으면 홈으로, 아니라면 로그인 화면으로 이동 */}
+            {/* to-be 무조건 홈으로 이동 */}
             <Route path='/' 
-                   element={user
-                            ? <Home />
-                            : <Navigate replace={true} to="/login"/>}> 
+                   element={<Home />}> 
+                    {/* element={user
+                    ? <Home />
+                    : <Navigate replace={true} to="/login"/>}>  */}
             </Route>
             {/* 로그인이 되어있다면, 로그인 화면이나 회원가입 화면으로 가지 못하게... */}
             <Route path='/login' 
